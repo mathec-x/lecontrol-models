@@ -1,0 +1,25 @@
+{
+  "name": "@locontrol/models",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --build",
+    "db:generate": "npx prisma generate",
+    "db:studio": "npx prisma studio",
+    "db:introspect": "npx prisma introspect",
+    "db:migrate": "npx prisma migrate dev",
+    "db:deploy": "npx prisma migrate deploy"
+  },
+  "author": "mathec",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^2.28.0"
+  },
+  "devDependencies": {
+    "@types/node": "^16.4.13",
+    "jest-mock-extended": "^2.0.1",
+    "prisma": "^2.28.0"
+  }
+}
