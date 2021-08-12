@@ -10,7 +10,8 @@
     "db:studio": "npx prisma studio",
     "db:introspect": "npx prisma introspect",
     "db:migrate": "npx prisma migrate dev",
-    "db:deploy": "npx prisma migrate deploy"
+    "db:deploy": "npx prisma migrate deploy",
+    "postinstall": "npm run db:generate"
   },
   "author": "mathec",
   "license": "ISC",
