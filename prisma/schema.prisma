@@ -11,23 +11,73 @@ generator client {
   previewFeatures = ["selectRelationCount", "filterJson"]
 }
 
+model File {
+  id   Int    @id @default(autoincrement())
+  uuid String @unique @default(uuid())
+  name String
+  path String
+  Company Company[]
+  User    User[]
+  Product Product[]
+}
+
+model Company {
+  id      Int       @id @default(autoincrement())
+  uuid    String    @unique @default(uuid())
+  name    String
+  fileId  Int
+  File    File      @relation(fields: [fileId], references: [id])
+  User    User[]
+  Product Product[]
+}
+
 model User {
-  id     Int    @id @default(autoincrement())
-  uuid   String @unique @default(uuid())
-  name   String
-  mail   String @unique
-  salt   String
-  rounds Int    @default(10)
-  Log    Log[]
+  id        Int      @id @default(autoincrement())
+  uuid      String   @unique @default(uuid())
+  name      String
+  mail      String   @unique
+  salt      String
+  tokens    Json
+  rounds    Int      @default(10)
+  updatedAt DateTime @default(now())
+  createdAt DateTime @default(now())
+  companyId Int
+  fileId    Int
+  File      File     @relation(fields: [fileId], references: [id])
+  Company   Company  @relation(fields: [companyId], references: [id])
+  Log       Log[]
+}
+
+model Product {
+  id                    Int               @id @default(autoincrement())
+  uuid                  String            @unique @default(uuid())
+  label                 String
+  updatedAt             DateTime          @default(now())
+  createdAt             DateTime          @default(now())
+  productsValidationsId Int
+  ProductsValidations   ProductValidation @relation(fields: [productsValidationsId], references: [id])
+  companyId             Int
+  Company               Company           @relation(fields: [companyId], references: [id])
+  File                  File              @relation(fields: [fileId], references: [id])
+  fileId                Int
+}
+
+model ProductValidation {
+  id         Int       @id @default(autoincrement())
+  uuid       String    @unique @default(uuid())
+  expiration DateTime  @default(now())
+  updatedAt  DateTime  @default(now())
+  createdAt  DateTime  @default(now())
+  Products   Product[]
 }
 
 model Log {
-  id     Int    @id @default(autoincrement())
-  uuid   String @unique @default(uuid())
-  body   Json
-  createdAt DateTime @default(now())  
-  User   User   @relation(fields: [userId], references: [id])
-  userId Int
+  id        Int      @id @default(autoincrement())
+  uuid      String   @unique @default(uuid())
+  body      Json
+  createdAt DateTime @default(now())
+  User      User     @relation(fields: [userId], references: [id])
+  userId    Int
 }
 
 model Laborer {
