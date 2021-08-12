@@ -24,7 +24,7 @@ model File {
 model Company {
   id      Int       @id @default(autoincrement())
   uuid    String    @unique @default(uuid())
-  name    String
+  name    String    @unique
   fileId  Int
   File    File      @relation(fields: [fileId], references: [id])
   User    User[]
