@@ -45,7 +45,7 @@ model User {
   files     File?    @relation(fields: [fileId], references: [id])
   companyId Int
   companies Company  @relation(fields: [companyId], references: [id])
-  logs      uLog[]
+  logs      Log[]
 }
 
 model Token {
