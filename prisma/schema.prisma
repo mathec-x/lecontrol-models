@@ -25,8 +25,8 @@ model Company {
   id      Int       @id @default(autoincrement())
   uuid    String    @unique @default(uuid())
   name    String    @unique
-  fileId  Int
-  File    File      @relation(fields: [fileId], references: [id])
+  fileId  Int?
+  File    File?      @relation(fields: [fileId], references: [id])
   User    User[]
   Product Product[]
 }
@@ -42,8 +42,8 @@ model User {
   updatedAt DateTime @default(now())
   createdAt DateTime @default(now())
   companyId Int
-  fileId    Int
-  File      File     @relation(fields: [fileId], references: [id])
+  fileId    Int?
+  File      File?     @relation(fields: [fileId], references: [id])
   Company   Company  @relation(fields: [companyId], references: [id])
   Log       Log[]
 }
@@ -58,8 +58,8 @@ model Product {
   ProductsValidations   ProductValidation @relation(fields: [productsValidationsId], references: [id])
   companyId             Int
   Company               Company           @relation(fields: [companyId], references: [id])
-  File                  File              @relation(fields: [fileId], references: [id])
-  fileId                Int
+  fileId                Int?
+  File                  File?              @relation(fields: [fileId], references: [id])
 }
 
 model ProductValidation {
