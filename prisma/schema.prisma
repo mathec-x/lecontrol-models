@@ -12,23 +12,23 @@ generator client {
 }
 
 model File {
-  id   Int    @id @default(autoincrement())
-  uuid String @unique @default(uuid())
-  name String
-  path String
-  Company Company[]
-  User    User[]
-  Product Product[]
+  id       Int       @id @default(autoincrement())
+  uuid     String    @unique @default(uuid())
+  name     String
+  path     String
+  Company  Company[]
+  users    User[]
+  products Product[]
 }
 
 model Company {
-  id      Int       @id @default(autoincrement())
-  uuid    String    @unique @default(uuid())
-  name    String    @unique
-  fileId  Int?
-  File    File?      @relation(fields: [fileId], references: [id])
-  User    User[]
-  Product Product[]
+  id       Int       @id @default(autoincrement())
+  uuid     String    @unique @default(uuid())
+  name     String    @unique
+  fileId   Int?
+  File     File?     @relation(fields: [fileId], references: [id])
+  users    User[]
+  products Product[]
 }
 
 model User {
@@ -37,15 +37,22 @@ model User {
   name      String
   mail      String   @unique
   salt      String
-  tokens    Json
   rounds    Int      @default(10)
   updatedAt DateTime @default(now())
   createdAt DateTime @default(now())
-  companyId Int
+  tokens    Token[]
   fileId    Int?
-  File      File?     @relation(fields: [fileId], references: [id])
-  Company   Company  @relation(fields: [companyId], references: [id])
-  Log       Log[]
+  files     File?    @relation(fields: [fileId], references: [id])
+  companyId Int
+  companies Company  @relation(fields: [companyId], references: [id])
+  logs      uLog[]
+}
+
+model Token {
+  id     Int    @id @default(autoincrement())
+  token  String
+  User   User?  @relation(fields: [userId], references: [id])
+  userId Int?
 }
 
 model Product {
@@ -59,7 +66,7 @@ model Product {
   companyId             Int
   Company               Company           @relation(fields: [companyId], references: [id])
   fileId                Int?
-  File                  File?              @relation(fields: [fileId], references: [id])
+  File                  File?             @relation(fields: [fileId], references: [id])
 }
 
 model ProductValidation {
@@ -68,7 +75,7 @@ model ProductValidation {
   expiration DateTime  @default(now())
   updatedAt  DateTime  @default(now())
   createdAt  DateTime  @default(now())
-  Products   Product[]
+  products   Product[]
 }
 
 model Log {
