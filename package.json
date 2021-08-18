@@ -11,7 +11,7 @@
     "db:introspect": "npx prisma introspect",
     "db:migrate": "npx prisma migrate dev",
     "db:deploy": "npx prisma migrate deploy",
-    "postinstall": "npm run db:generate"
+    "postinstall": "npm run db:deploy && npm run db:generate"
   },
   "author": "mathec",
   "license": "ISC",
