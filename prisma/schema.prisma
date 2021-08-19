@@ -91,6 +91,7 @@ model Laborer {
   id        Int      @id @default(autoincrement())
   uuid      String   @unique @default(uuid())
   name      String
+  props     Json?
   phone     String
   mail      String
   status    Boolean  @default(true)
